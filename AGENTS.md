@@ -8,6 +8,16 @@ If this repo was created by copying the template, do this BEFORE any coding:
 2. Run the Project Initialization workflow located in: .agent/workflows/project-initialization.md.
 3. Only after initialization is complete, start implementation work.
 
+## Capabilities
+The following tools are available to help you complete tasks:
+
+### Workflows
+- `/project-initialization`: Set up a new project from scratch.
+- `/feature-development`: The standard loop for building features (Plan -> Implement -> Verify).
+
+### Skills
+- `code-review`: specialized instructions for reviewing PRs and code quality.
+
 ## Operating rules
 - If the task is more than a tiny change, write a short plan (5 to 10 bullets) before editing files.
 - Implement in small, reversible steps.

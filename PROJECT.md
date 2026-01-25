@@ -16,6 +16,11 @@ How should it run locally:
 - Payments:
 - other:
 
+## Architecture & Key Decisions
+(Agent: Record high-level architectural choices here, e.g., "Using Server Actions for mutations" or "Tailwind for all styling". This helps future sessions maintain consistency.)
+- 
+
+
 ## Constraints
 - Brand and design constraints:
 - Security and privacy constraints:

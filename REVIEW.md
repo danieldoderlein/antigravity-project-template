@@ -1,46 +1,53 @@
-# Antigravity Template Review
+# Antigravity Template Review & Proposal
 
-This document outlines the findings from a review of the current project template against Antigravity best practices and documentation.
+## 1. Executive Summary
+This project template has been reviewed against the Antigravity documentation for **Rules**, **Workflows**, and **Skills**.
+**Status**: The current structure is **Compliant** with basic requirements, but **Incomplete** regarding best practices for a robust, production-ready template.
 
-## Critical Issues
+## 2. Compliance Verification
+| Component | Status | Notes |
+|-----------|--------|-------|
+| **Folder Structure** | ✅ Pass | `.agent/rules`, `.agent/workflows`, `.agent/skills` are correctly placed. |
+| **Skill Definition** | ✅ Pass | `code-review` skill now correctly matches folder name and contains required frontmatter. |
+| **Project Context** | ✅ Pass | `PROJECT.md` and `AGENTS.md` provide necessary context. |
 
-### 1. Broken Reference in `AGENTS.md`
-- **File**: `AGENTS.md`
-- **Issue**: Line 17 refers to `.agent/rules/is-it-done.md`.
-- **Reality**: The actual file is named `.agent/rules/definition-of-done.md`.
-- **Action**: Update `AGENTS.md` to reference the correct filename.
+## 3. Proposal: Missing Core Components
 
-## Structural Improvements
+### 3.1. Workflows (`.agent/workflows/`)
+The current template has `project-initialization`, which is excellent for setup, but lacks workflows for the *development loop*.
 
-### 2. Skill Directory Naming
-- **File**: `.agent/skills/example-skill/`
-- **Issue**: The directory name `example-skill` implies a placeholder, but the content (`SKILL.md`) defines a specific `code-review` skill.
-- **Best Practice**: Skill directory names should match the `name` defined in `SKILL.md` for clarity and auto-discovery.
-- **Action**: Rename directory `.agent/skills/example-skill` to `.agent/skills/code-review`.
+*   **Proposal A: Add `feature-development.md`**
+    *   *Why*: To guide the agent through the standard lifecycle: Plan -> Implement -> Verify -> Document.
+    *   *Content*: Steps that force the agent to read `PROJECT.md`, check `definition-of-done.md`, and run `scripts/check.sh` before reporting completion.
+*   **Proposal B: Add `deployment.md`**
+    *   *Why*: To capture the critical path of shipping code.
+    *   *Content*: Steps to build, verify environment variables, and trigger release (manual or automated).
 
-## Proposed Additions
+### 3.2. Rules (`.agent/rules/`)
+Current rules are minimal. To prevent "drift" (agent inventing new patterns), we need explicit constraints.
 
-### 3. Missing Workflows
-Based on `rules-workflows` documentation, workflows should cover common complex tasks.
-- **Proposal**: Add `.agent/workflows/deployment.md`.
-  - *Purpose*: Define steps to deploy the application (e.g., Vercel, Docker).
-  - *Content*: Template steps for building, setting env vars, and verifying deployment.
-- **Proposal**: Add `.agent/workflows/test.md`.
-  - *Purpose*: Standardize the testing loop.
+*   **Proposal C: Add `tech-stack.md` (Trigger: `always_on`)**
+    *   *Why*: Agents often default to standard libraries that might not match the specific project choices (e.g., using `fetch` vs `axios`).
+    *   *Content*: "Refusal to use libraries not listed in `package.json` unless explicitly requested."
+*   **Proposal D: Add `style-guide.md` (Trigger: `model_decision` or `glob`)**
+    *   *Why*: To enforce coding styles (naming conventions, file organization) that linters can't catch.
 
-### 4. Missing Rules
-Rules govern the agent's behavior.
-- **Proposal**: Add `.agent/rules/tech-stack.md`.
-  - *Purpose*: Define allowed libraries and frameworks to prevent "stack drift".
-- **Proposal**: Add `.agent/rules/communication.md`.
-  - *Purpose*: Define how the agent should format PRs or commit messages (if not in AGENTS.md).
+### 3.3. Skills (`.agent/skills/`)
+The `code-review` skill is a good text-based example. The template is missing an example of a **Script-Backed Skill**, which is a powerful feature mentioned in the docs.
 
-## Content Refinements
+*   **Proposal E: Add `scaffold-component` Skill**
+    *   *Structure*: `.agent/skills/scaffold-component/` containing `SKILL.md` and `scripts/generate.sh`.
+    *   *Why*: Demonstrates how an agent can use existing scripts to perform reliable code generation rather than writing files effectively "by hand" every time.
 
-### 5. `AGENTS.md` Clarity
-- **Observation**: `AGENTS.md` is the entry point.
-- **Action**: Add a specific link section for "Available Workflows" and "Available Skills" so the agent can self-discover capabilities by reading this single file.
+## 4. Content Improvements
 
-### 6. `scripts/` Robustness
-- **Observation**: Scripts are echoes.
-- **Action**: Add comments in `bootstrap.sh` recommending `npm ci` over `npm install` for deterministic builds.
+### 4.1. `AGENTS.md` Optimization
+*   **Update**: Add a section "Capabilities" that explicitly lists the available workflows (e.g., "Run `/project-initialization` to start") and skills. This acts as a menu for the agent.
+
+### 4.2. `PROJECT.md` Refinement
+*   **Update**: Add an "Architecture & Key Decisions" section. This allows the agent to record high-level decisions (e.g., "We are using Server Components") that future sessions must respect.
+
+## 5. Implementation Plan
+1.  **Create** `feature-development.md` workflow.
+2.  **Create** `tech-stack.md` rule.
+3.  **Update** `AGENTS.md` to reference these new capabilities.
