@@ -14,7 +14,7 @@ If this repo was created by copying the template, do this BEFORE any coding:
 - Prefer simple solutions that are easy to maintain.
 
 ## Definition of done
-A task is done only when it satisfies the rule as defined in: .agent/rules/is-it-done.md
+A task is done only when it satisfies the rule as defined in: .agent/rules/definition-of-done.md
 
 ## Secrets and external accounts
 When external services are required:
